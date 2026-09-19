@@ -1,35 +1,51 @@
-class SequenceWorker extends Thread {
+import java.util.Scanner;
 
-    private String workerid;
-
-    public SequenceWorker(String id) {
-        this.workerid = id;
-    }
-
-    @Override
-    public void run() {
-        try {
-            for (int i = 1; i <= 3; i++) {
-                System.out.println(
-                    "Worker thread [" + workerid + "] tracking step " + i
-                );
-
-                Thread.sleep(500);
-            }
-        } catch (InterruptedException e) {
-            System.out.println("Exception Interrupted");
-        }
-    }
-}
-
-public class ThreadExtensionDemo {
+public class Calculator {
 
     public static void main(String[] args) {
 
-        SequenceWorker t1 = new SequenceWorker("Alpha");
-        SequenceWorker t2 = new SequenceWorker("Beta");
+        Scanner sc = new Scanner(System.in);
 
-        t1.start();
-        t2.start();
+        System.out.print("Enter first number: ");
+        double num1 = sc.nextDouble();
+
+        System.out.print("Enter operator (+, -, *, /): ");
+        char operator = sc.next().charAt(0);
+
+        System.out.print("Enter second number: ");
+        double num2 = sc.nextDouble();
+
+        double result;
+
+        switch (operator) {
+            case '+':
+                result = num1 + num2;
+                break;
+
+            case '-':
+                result = num1 - num2;
+                break;
+
+            case '*':
+                result = num1 * num2;
+                break;
+
+            case '/':
+                if (num2 == 0) {
+                    System.out.println("Cannot divide by zero.");
+                    return;
+                }
+                result = num1 / num2;
+                break;
+
+            default:
+                System.out.println("Invalid operator.");
+                return;
+        }
+
+        System.out.println("Result = " + result);
+
+        sc.close();
     }
 }
+
